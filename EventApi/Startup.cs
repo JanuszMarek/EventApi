@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,10 @@ namespace EventApi
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            ConfigureSwagger(services);
             ConfigureDatabase(services);
+
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +42,7 @@ namespace EventApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                UseSwagger(app);
             }
 
             app.UseRouting();
@@ -78,9 +83,21 @@ namespace EventApi
             int.TryParse(Configuration["SQL:CommandTimeout"], out int commandTimeout);
 
             services.AddDbContext<Context>(option =>
-            { 
+            {
                 option.UseSqlServer(connectionString, b => b.MigrationsAssembly(nameof(EventApi)).CommandTimeout(commandTimeout));
             });
         }
+
+        private static void ConfigureSwagger(IServiceCollection services)
+        {
+            services.AddSwaggerGen();
+        }
+
+        private static void UseSwagger(IApplicationBuilder app)
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
     }
 }
