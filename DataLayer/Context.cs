@@ -8,5 +8,10 @@ namespace DataLayer
         public DbSet<Event> Events { get; set; }
         public DbSet<EventTicket> EventTickets { get; set; }
         public DbSet<EventParticipant> EventParticipants { get; set; }
+
+        public Context(DbContextOptions<Context> options)
+            : base(options)
+        {
+        }
     }
 }
