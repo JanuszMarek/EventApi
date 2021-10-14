@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EventApi.Migrations
 {
-    [DbContext(typeof(Context))]
+    [DbContext(typeof(EventContext))]
     [Migration("20211013162854_Init")]
     partial class Init
     {

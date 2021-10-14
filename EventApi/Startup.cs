@@ -76,7 +76,7 @@ namespace EventApi
 
             int.TryParse(Configuration["SQL:CommandTimeout"], out int commandTimeout);
 
-            services.AddDbContext<Context>(option =>
+            services.AddDbContext<EventContext>(option =>
             {
                 option.UseSqlServer(connectionString, b => b.MigrationsAssembly(nameof(EventApi)).CommandTimeout(commandTimeout));
             });

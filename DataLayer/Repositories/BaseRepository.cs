@@ -17,22 +17,18 @@ namespace DataLayer.Repositories
     {
         protected readonly IMapper mapper;
         protected readonly DbSet<TEntity> dbSet;
-        protected readonly Context context;
+        protected readonly EventContext context;
 
-        protected BaseRepository(Context context)
+        protected BaseRepository(EventContext context, IMapper mapper)
         {
             this.context = context;
             dbSet = context.Set<TEntity>();
+            this.mapper = mapper;
         }
 
         public static Expression<Func<TEntity, bool>> ByIdExpression(TKey id)
         {
             return x => x.Id.Equals(id);
-        }
-
-        public static Expression<Func<T, bool>> ByIdExpression<T>(long id) where T : IEntity<long>
-        {
-            return x => x.Id == id;
         }
 
         public static Expression<Func<TEntity, bool>> ByIdRangeExpression(IEnumerable<TKey> id)
