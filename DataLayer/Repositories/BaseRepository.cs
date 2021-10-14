@@ -64,9 +64,14 @@ namespace DataLayer.Repositories
 
         public async Task<TEntity> GetAsync(TKey id)
         {
-            return await dbSet
-                .Where(ByIdExpression(id))
-                .FirstOrDefaultAsync();
+            return await GetAsync(id, null);
+        }
+
+        public async Task<TEntity> GetAsync(TKey id, IEnumerable<string> includes)
+        {
+            var query = GetWhereIncludeQuery(ByIdExpression(id), includes);
+
+            return await query.FirstOrDefaultAsync();
         }
 
         public async Task<T> GetAsync<T>(Expression<Func<TEntity, bool>> wherePredicte)
@@ -80,16 +85,36 @@ namespace DataLayer.Repositories
 
         public async Task<IEnumerable<TEntity>> GetRangeAsync(IEnumerable<TKey> ids)
         {
-            return await dbSet
-                .Where(ByIdRangeExpression(ids))
-                .ToListAsync();
+            return await GetRangeAsync(ByIdRangeExpression(ids));
         }
 
         public async Task<IEnumerable<TEntity>> GetRangeAsync(Expression<Func<TEntity, bool>> wherePredicte)
         {
-            return await dbSet
+            return await GetRangeAsync(wherePredicte, null);
+        }
+
+        public async Task<IEnumerable<TEntity>> GetRangeAsync(Expression<Func<TEntity, bool>> wherePredicte, IEnumerable<string> includes)
+        {
+            IQueryable<TEntity> query = GetWhereIncludeQuery(wherePredicte, includes);
+
+            return await query.ToListAsync();
+        }
+
+        private IQueryable<TEntity> GetWhereIncludeQuery(Expression<Func<TEntity, bool>> wherePredicte, IEnumerable<string> includes)
+        {
+            var query = dbSet
                 .Where(wherePredicte)
-                .ToListAsync();
+                .AsQueryable();
+
+            if (includes != null)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+
+            return query;
         }
 
         public async Task<IEnumerable<T>> GetRangeAsync<T>(Expression<Func<TEntity, bool>> wherePredicte)
