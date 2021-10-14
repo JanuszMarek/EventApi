@@ -4,4 +4,24 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Modules\EventModule\DTOs\" />
+    <Folder Include="Modules\EventModule\Models\" />
+    <Folder Include="Modules\EventModule\Profiles\" />
+    <Folder Include="Modules\EventParticipantModule\DTOs\" />
+    <Folder Include="Modules\EventParticipantModule\Models\" />
+    <Folder Include="Modules\EventParticipantModule\Profiles\" />
+    <Folder Include="Modules\EventTicketModule\DTOs\" />
+    <Folder Include="Modules\EventTicketModule\Models\" />
+    <Folder Include="Modules\EventTicketModule\Profiles\" />
+  </ItemGroup>
+
 </Project>
