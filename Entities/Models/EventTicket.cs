@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Infrastructure.Interfaces.AbstractEntities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Models
 {
-    public class EventTicket
+    public class EventTicket : IEntity<long>
     {
         public long Id { get; set; }
 

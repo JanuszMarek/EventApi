@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Infrastructure.Interfaces.AbstractEntities;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Entities.Models
 {
-    public class EventParticipant
+    public class EventParticipant : IEntity<int>
     {
         public int Id { get; set; }
 

@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Infrastructure.Interfaces.AbstractEntities;
+using System.Collections.Generic;
 
 namespace Entities.Models
 {
-    public class Event
+    public class Event : IEntity<int>
     {
         public int Id { get; set; }
 
