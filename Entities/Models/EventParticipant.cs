@@ -1,4 +1,4 @@
-﻿using Infrastructure.Interfaces.AbstractEntities;
+﻿using Entities.Interfaces;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 

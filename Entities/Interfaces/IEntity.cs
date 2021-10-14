@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Interfaces.AbstractEntities
+﻿namespace Entities.Interfaces
 {
     public interface IEntity<TKey> where TKey : struct
     {

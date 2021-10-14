@@ -1,4 +1,4 @@
-﻿using Infrastructure.Interfaces.AbstractEntities;
+﻿using Entities.Interfaces;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Models

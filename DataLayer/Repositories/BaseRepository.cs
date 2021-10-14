@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Infrastructure.Interfaces.AbstractEntities;
+using Entities.Interfaces;
 using Infrastructure.Interfaces.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System;
