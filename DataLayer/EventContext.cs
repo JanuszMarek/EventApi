@@ -1,4 +1,5 @@
-﻿using Entities.Models;
+﻿using DataLayer.EntitySchemas;
+using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer
@@ -12,6 +13,13 @@ namespace DataLayer
         public EventContext(DbContextOptions<EventContext> options)
             : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            EventSchema.CreateDatabaseScheme(modelBuilder);
+            EventTicketSchema.CreateDatabaseScheme(modelBuilder);
+            EventParticipantSchema.CreateDatabaseScheme(modelBuilder);
         }
     }
 }

@@ -5,11 +5,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Entities.Models
 {
-    public class Event : IEntity<int>, ISoftDeleteEntity
+    public partial class Event : IEntity<int>, ISoftDeleteEntity
     {
         public int Id { get; set; }
 
-        [MaxLength(EventConstants.NAME_MAX_LENGTH)]
         public string Name { get; set; }
 
         [Range(EventConstants.TICKET_POOL_MIN_VALUE, EventConstants.TICKET_POOL_MAX_VALUE)]
