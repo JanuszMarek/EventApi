@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Interfaces.IRepositories
+namespace Infrastructure.Interfaces.IRepositories.Abstract
 {
-    public interface IBaseRepository<TEntity, TKey> 
+    public interface IBaseRepository<TEntity, TKey>
         where TEntity : class, IEntity<TKey>
         where TKey : struct
     {

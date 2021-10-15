@@ -1,10 +1,15 @@
+using BusinessLogic.Modules.EventModule.Services;
 using DataLayer;
+using DataLayer.Repositories;
+using Infrastructure.Interfaces.IRepositories;
+using Infrastructure.Interfaces.IServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace EventApi
 {
@@ -26,7 +31,9 @@ namespace EventApi
         {
             ConfigureSwagger(services);
             ConfigureDatabase(services);
+            RegisterService(services);
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllers();
         }
 
@@ -93,5 +100,21 @@ namespace EventApi
             app.UseSwaggerUI();
         }
 
+        private static void RegisterService(IServiceCollection services)
+        {
+            RegisterRepositories(services);
+            RegisterBusinessServices(services);
+
+            static void RegisterRepositories(IServiceCollection services)
+            {
+                services.AddTransient<IEventRepository, EventRepository>();
+                services.AddTransient<IEventTicketRepository, EventTicketRepository>();
+            }
+
+            static void RegisterBusinessServices(IServiceCollection services)
+            {
+                services.AddTransient<IEventService, EventService>();
+            }
+        }
     }
 }

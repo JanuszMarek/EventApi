@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BusinessModels.Modules.EventModule.Models;
+using Infrastructure.Interfaces.IServices;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace EventApi.Controllers
 {
@@ -6,9 +9,18 @@ namespace EventApi.Controllers
     [Route("api/[controller]")]
     public class EventController : Controller
     {
-        [HttpGet]
-        public IActionResult Index()
+        private readonly IEventService eventService;
+
+        public EventController(IEventService eventService)
         {
+            this.eventService = eventService;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAsync([FromBody] EventCreateModel createModel)
+        {
+            await eventService.CreateAsync(createModel);
+
             return Ok();
         }
     }

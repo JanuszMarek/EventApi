@@ -1,4 +1,5 @@
 ﻿using Entities.Models;
+using Infrastructure.Interfaces.IRepositories.Abstract;
 
 namespace Infrastructure.Interfaces.IRepositories
 {

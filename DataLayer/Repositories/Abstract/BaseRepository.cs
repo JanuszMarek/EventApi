@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Entities.Interfaces;
-using Infrastructure.Interfaces.IRepositories;
+using Infrastructure.Interfaces.IRepositories.Abstract;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace DataLayer.Repositories
+namespace DataLayer.Repositories.Abstract
 {
     public abstract class BaseRepository<TEntity, TKey> : IBaseRepository<TEntity, TKey>
         where TEntity : class, IEntity<TKey>
@@ -26,15 +26,10 @@ namespace DataLayer.Repositories
             this.mapper = mapper;
         }
 
-        public static Expression<Func<TEntity, bool>> ByIdExpression(TKey id)
-        {
-            return x => x.Id.Equals(id);
-        }
-
-        public static Expression<Func<TEntity, bool>> ByIdRangeExpression(IEnumerable<TKey> id)
-        {
-            return x => id.Contains(x.Id);
-        }
+        public static Expression<Func<TEntity, bool>> ByIdExpression(TKey id) => x => x.Id.Equals(id);
+        
+        public static Expression<Func<TEntity, bool>> ByIdRangeExpression(IEnumerable<TKey> id) => x => id.Contains(x.Id);
+        
 
         public async Task AddAsync(TEntity entity)
         {
@@ -69,7 +64,7 @@ namespace DataLayer.Repositories
 
         public async Task<TEntity> GetAsync(TKey id, IEnumerable<string> includes)
         {
-            var query = GetWhereIncludeQuery(ByIdExpression(id), includes);
+            var query = GetWhereIncludeQuery(new[] { ByIdExpression(id) }, includes);
 
             return await query.FirstOrDefaultAsync();
         }
@@ -95,16 +90,23 @@ namespace DataLayer.Repositories
 
         public async Task<IEnumerable<TEntity>> GetRangeAsync(Expression<Func<TEntity, bool>> wherePredicte, IEnumerable<string> includes)
         {
-            IQueryable<TEntity> query = GetWhereIncludeQuery(wherePredicte, includes);
+            IQueryable<TEntity> query = GetWhereIncludeQuery(new[] { wherePredicte }, includes);
 
             return await query.ToListAsync();
         }
 
-        private IQueryable<TEntity> GetWhereIncludeQuery(Expression<Func<TEntity, bool>> wherePredicte, IEnumerable<string> includes)
+        protected IQueryable<TEntity> GetWhereIncludeQuery(IEnumerable<Expression<Func<TEntity, bool>>> wherePredictes, IEnumerable<string> includes)
         {
             var query = dbSet
-                .Where(wherePredicte)
                 .AsQueryable();
+
+            if (wherePredictes != null)
+            {
+                foreach (var where in wherePredictes)
+                {
+                    query = query.Where(where);
+                }
+            }
 
             if (includes != null)
             {
@@ -119,11 +121,25 @@ namespace DataLayer.Repositories
 
         public async Task<IEnumerable<T>> GetRangeAsync<T>(Expression<Func<TEntity, bool>> wherePredicte)
         {
-            return await dbSet
-                .Where(wherePredicte)
-                .AsNoTracking()
-                .ProjectTo<T>(mapper.ConfigurationProvider)
+            return await GetProjectableQuery<T>(new[] { wherePredicte})
                 .ToListAsync();
+        }
+
+        protected IQueryable<T> GetProjectableQuery<T>(IEnumerable<Expression<Func<TEntity, bool>>> wherePredictes)
+        {
+            var query = dbSet.AsQueryable();
+
+            if (wherePredictes != null)
+            {
+                foreach (var where in wherePredictes)
+                {
+                    query = query.Where(where);
+                }
+            }
+
+            return query
+                .AsNoTracking()
+                .ProjectTo<T>(mapper.ConfigurationProvider);
         }
 
         public void Update(TEntity entity)
