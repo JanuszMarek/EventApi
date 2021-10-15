@@ -1,4 +1,5 @@
 ﻿using BusinessModels.Modules.EventModule.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Interfaces.IServices
@@ -8,6 +9,7 @@ namespace Infrastructure.Interfaces.IServices
         Task CreateAsync(EventCreateModel createModel);
         Task DeleteAsync(int eventId);
         Task EditAsync(int eventId, EventEditModel editModel);
-        Task<EventDetailModel> GetDetailsAsync(int eventId);
+        Task<EventDetailModel> GetDetailAsync(int eventId);
+        Task<IEnumerable<EventDetailModel>> GetListAsync();
     }
 }

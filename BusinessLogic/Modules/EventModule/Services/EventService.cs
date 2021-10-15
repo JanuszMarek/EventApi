@@ -3,6 +3,7 @@ using BusinessModels.Modules.EventModule.Models;
 using Entities.Models;
 using Infrastructure.Interfaces.IRepositories;
 using Infrastructure.Interfaces.IServices;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BusinessLogic.Modules.EventModule.Services
@@ -18,7 +19,12 @@ namespace BusinessLogic.Modules.EventModule.Services
             this.mapper = mapper;
         }
 
-        public async Task<EventDetailModel> GetDetailsAsync(int eventId)
+        public async Task<IEnumerable<EventDetailModel>> GetListAsync()
+        {
+            return await repository.GetActiveListAsync<EventDetailModel>();
+        }
+
+        public async Task<EventDetailModel> GetDetailAsync(int eventId)
         {
             return await repository.GetActiveAsync<EventDetailModel>(eventId);
         }

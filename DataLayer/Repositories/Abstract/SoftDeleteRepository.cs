@@ -32,6 +32,16 @@ namespace DataLayer.Repositories.Abstract
             return await GetProjectableQuery<T>(predicates).FirstOrDefaultAsync();
         }
 
+        public async Task<IEnumerable<T>> GetActiveListAsync<T>()
+        {
+            var predicates = new List<Expression<Func<TEntity, bool>>>()
+            {
+                IsActive()
+            };
+
+            return await GetProjectableQuery<T>(predicates).ToListAsync();
+        }
+
         public async Task<TEntity> GetActiveAsync(TKey id)
         {
             return await GetActiveAsync(ByIdExpression(id), null);

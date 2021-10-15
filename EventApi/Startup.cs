@@ -91,7 +91,10 @@ namespace EventApi
 
         private static void ConfigureSwagger(IServiceCollection services)
         {
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.EnableAnnotations();
+            });
         }
 
         private static void UseSwagger(IApplicationBuilder app)

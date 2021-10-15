@@ -11,6 +11,7 @@ namespace Infrastructure.Interfaces.IRepositories.Abstract
         where TKey : struct
     {
         Task<T> GetActiveAsync<T>(TKey id);
+        Task<IEnumerable<T>> GetActiveListAsync<T>();
         Task<TEntity> GetActiveAsync(Expression<Func<TEntity, bool>> wherePredicte, IEnumerable<string> includes);
         Task<TEntity> GetActiveAsync(TKey id);
     }
