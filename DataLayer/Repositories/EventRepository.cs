@@ -6,7 +6,7 @@ using Infrastructure.Interfaces.IRepositories;
 namespace DataLayer.Repositories
 {
     public class EventRepository : 
-        SoftDeleteRepository<Event, int>, 
+        BaseRepository<Event, int>, 
         IEventRepository
     {
         public EventRepository(EventContext context, IMapper mapper) : base(context, mapper)

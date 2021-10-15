@@ -21,12 +21,12 @@ namespace BusinessLogic.Modules.EventModule.Services
 
         public async Task<IEnumerable<EventDetailModel>> GetListAsync()
         {
-            return await repository.GetActiveListAsync<EventDetailModel>();
+            return await repository.GetRangeAsync<EventDetailModel>();
         }
 
         public async Task<EventDetailModel> GetDetailAsync(int eventId)
         {
-            return await repository.GetActiveAsync<EventDetailModel>(eventId);
+            return await repository.GetAsync<EventDetailModel>(eventId);
         }
 
         public async Task CreateAsync(EventCreateModel createModel)
@@ -39,7 +39,7 @@ namespace BusinessLogic.Modules.EventModule.Services
 
         public async Task DeleteAsync(int eventId)
         {
-            var eventToDelete = await repository.GetActiveAsync(eventId);
+            var eventToDelete = await repository.GetAsync(eventId);
 
             if (eventToDelete != null)
             {
@@ -50,7 +50,7 @@ namespace BusinessLogic.Modules.EventModule.Services
 
         public async Task EditAsync(int eventId, EventEditModel editModel)
         {
-            var eventToEdit = await repository.GetActiveAsync(eventId);
+            var eventToEdit = await repository.GetAsync(eventId);
 
             if (eventToEdit != null)
             {

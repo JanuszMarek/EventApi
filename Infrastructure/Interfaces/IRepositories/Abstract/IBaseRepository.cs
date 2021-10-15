@@ -17,10 +17,12 @@ namespace Infrastructure.Interfaces.IRepositories.Abstract
         Task<TEntity> FindAsync(TKey id);
         Task<TEntity> GetAsync(TKey id);
         Task<TEntity> GetAsync(TKey id, IEnumerable<string> includes);
+        Task<T> GetAsync<T>(TKey id);
         Task<T> GetAsync<T>(Expression<Func<TEntity, bool>> wherePredicte);
         Task<IEnumerable<TEntity>> GetRangeAsync(IEnumerable<TKey> ids);
         Task<IEnumerable<TEntity>> GetRangeAsync(Expression<Func<TEntity, bool>> wherePredicte);
         Task<IEnumerable<TEntity>> GetRangeAsync(Expression<Func<TEntity, bool>> wherePredicte, IEnumerable<string> includes);
+        Task<IEnumerable<T>> GetRangeAsync<T>();
         Task<IEnumerable<T>> GetRangeAsync<T>(Expression<Func<TEntity, bool>> wherePredicte);
         void Update(TEntity entity);
         void UpdateRange(IEnumerable<TEntity> entities);
