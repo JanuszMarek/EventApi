@@ -52,5 +52,14 @@ namespace EventApi.Controllers
 
             return Ok();
         }
+
+        [HttpDelete("{id}")]
+        [SwaggerOperation(nameof(DeleteAsync))]
+        public async Task<IActionResult> DeleteAsync([FromRoute] int id)
+        {
+            await eventService.DeleteAsync(id);
+
+            return Ok();
+        }
     }
 }

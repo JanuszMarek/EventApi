@@ -1,6 +1,9 @@
 ﻿using DataLayer.EntitySchemas;
+using Entities.Interfaces;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DataLayer
 {
@@ -21,5 +24,36 @@ namespace DataLayer
             EventTicketSchema.CreateDatabaseScheme(modelBuilder);
             EventParticipantSchema.CreateDatabaseScheme(modelBuilder);
         }
+
+        public virtual async Task<int> SaveChangesAsync()
+        {
+            OnBeforeSaveChanges();
+            var result = await base.SaveChangesAsync();
+            OnAfterSaveChanges();
+
+            return result;
+        }
+
+        private void OnBeforeSaveChanges()
+        {
+            MarkDeletedEntitiesAsSoftDelete();
+        }
+
+        private void MarkDeletedEntitiesAsSoftDelete()
+        {
+            var softDeletedEntries = ChangeTracker.Entries()
+                .Where(x => x.State == EntityState.Deleted && x.Entity is ISoftDeleteEntity);
+
+            foreach (var softDeletedEntity in softDeletedEntries)
+            {
+                softDeletedEntity.State = EntityState.Modified;
+                softDeletedEntity.CurrentValues[nameof(ISoftDeleteEntity.IsDeleted)] = true;
+            }
+        }
+
+        private void OnAfterSaveChanges()
+        {
+        }
+
     }
 }
