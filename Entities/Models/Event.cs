@@ -12,7 +12,7 @@ namespace Entities.Models
         [MaxLength(EventConstants.NAME_MAX_LENGTH)]
         public string Name { get; set; }
 
-        [Range(0, EventConstants.TICKET_POOL_MAX_VALUE)]
+        [Range(EventConstants.TICKET_POOL_MIN_VALUE, EventConstants.TICKET_POOL_MAX_VALUE)]
         public int TicketPool { get; set; }
 
         public bool IsDeleted { get; set; }
