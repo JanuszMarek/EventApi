@@ -1,4 +1,4 @@
-﻿using Entities.Interfaces;
+﻿using Entities.Interfaces.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;

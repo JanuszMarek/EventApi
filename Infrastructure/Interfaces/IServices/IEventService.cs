@@ -1,4 +1,5 @@
-﻿using BusinessModels.Modules.EventModule.Models;
+﻿using BusinessModels.Modules.EventModule.DTOs;
+using BusinessModels.Modules.EventModule.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,5 +12,6 @@ namespace Infrastructure.Interfaces.IServices
         Task EditAsync(int eventId, EventEditModel editModel);
         Task<EventDetailModel> GetDetailAsync(int eventId);
         Task<IEnumerable<EventDetailModel>> GetListAsync();
+        Task<EventRemainingTicketDto> GetTicketRemainingCountAsync(int eventId);
     }
 }

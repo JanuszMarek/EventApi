@@ -13,9 +13,4 @@
     <ProjectReference Include="..\Models\BusinessModels.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Modules\EventParticipantModule\Profiles\" />
-    <Folder Include="Modules\EventTicketModule\Profiles\" />
-  </ItemGroup>
-
 </Project>

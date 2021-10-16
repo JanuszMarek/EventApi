@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using BusinessModels.Modules.EventModule.DTOs;
 using BusinessModels.Modules.EventModule.Models;
 using Entities.Models;
-using System.Linq;
 
 namespace BusinessLogic.Modules.EventModule.Profiles
 {
@@ -11,6 +11,7 @@ namespace BusinessLogic.Modules.EventModule.Profiles
         {
             MapModelsToEntities();
             MapEntitiesToModels();
+            MapEntitiesToDtos();
         }
 
         private void MapModelsToEntities()
@@ -35,6 +36,12 @@ namespace BusinessLogic.Modules.EventModule.Profiles
             CreateMap<Event, EventDetailModel>()
                 .ForMember(dst => dst.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dst => dst.TicketsRemaining, opt => opt.MapFrom(src => src.TicketPool - src.EventTickets.Count));
+        }
+
+        private void MapEntitiesToDtos()
+        {
+            CreateMap<Event, EventRemainingTicketDto>()
+                .ForMember(dst => dst.Count, opt => opt.MapFrom(src => src.TicketPool - src.EventTickets.Count));
         }
     }
 }

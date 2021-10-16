@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BusinessModels.Modules.EventModule.DTOs;
 using BusinessModels.Modules.EventModule.Models;
 using Entities.Models;
 using Infrastructure.Interfaces.IRepositories;
@@ -29,6 +30,11 @@ namespace BusinessLogic.Modules.EventModule.Services
             return await repository.GetAsync<EventDetailModel>(eventId);
         }
 
+        public async Task<EventRemainingTicketDto> GetTicketRemainingCountAsync(int eventId)
+        {
+            return await repository.GetAsync<EventRemainingTicketDto>(eventId);
+        }
+
         public async Task CreateAsync(EventCreateModel createModel)
         {
             var newEvent = mapper.Map<Event>(createModel);
@@ -40,23 +46,17 @@ namespace BusinessLogic.Modules.EventModule.Services
         public async Task DeleteAsync(int eventId)
         {
             var eventToDelete = await repository.GetAsync(eventId);
+            repository.Delete(eventToDelete);
 
-            if (eventToDelete != null)
-            {
-                repository.Delete(eventToDelete);
-                await repository.SaveChangesAsync();
-            }
+            await repository.SaveChangesAsync();
         }
 
         public async Task EditAsync(int eventId, EventEditModel editModel)
         {
             var eventToEdit = await repository.GetAsync(eventId);
+            mapper.Map(editModel, eventToEdit);
 
-            if (eventToEdit != null)
-            {
-                mapper.Map(editModel, eventToEdit);
-                await repository.SaveChangesAsync();
-            }
+            await repository.SaveChangesAsync();
         }
     }
 }

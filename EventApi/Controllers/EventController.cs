@@ -26,11 +26,11 @@ namespace EventApi.Controllers
             return Ok(events);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{eventId}")]
         [SwaggerOperation(nameof(GetDetailsAsync))]
-        public async Task<IActionResult> GetDetailsAsync([FromRoute] int id)
+        public async Task<IActionResult> GetDetailsAsync([FromRoute] int eventId)
         {
-            var eventModel = await eventService.GetDetailAsync(id);
+            var eventModel = await eventService.GetDetailAsync(eventId);
 
             return Ok(eventModel);
         }
@@ -44,20 +44,20 @@ namespace EventApi.Controllers
             return Ok();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{eventId}")]
         [SwaggerOperation(nameof(EditAsync))]
-        public async Task<IActionResult> EditAsync([FromRoute] int id, [FromBody] EventEditModel editModel)
+        public async Task<IActionResult> EditAsync([FromRoute] int eventId, [FromBody] EventEditModel editModel)
         {
-            await eventService.EditAsync(id, editModel);
+            await eventService.EditAsync(eventId, editModel);
 
             return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{eventId}")]
         [SwaggerOperation(nameof(DeleteAsync))]
-        public async Task<IActionResult> DeleteAsync([FromRoute] int id)
+        public async Task<IActionResult> DeleteAsync([FromRoute] int eventId)
         {
-            await eventService.DeleteAsync(id);
+            await eventService.DeleteAsync(eventId);
 
             return Ok();
         }

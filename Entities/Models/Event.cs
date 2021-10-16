@@ -1,5 +1,5 @@
 ﻿using Entities.Constants;
-using Entities.Interfaces;
+using Entities.Interfaces.Abstract;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 

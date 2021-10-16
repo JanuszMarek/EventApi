@@ -1,17 +1,26 @@
 ﻿using AutoMapper;
+using Entities.Interfaces;
 using Infrastructure.Interfaces.IRepositories;
+using Infrastructure.Interfaces.IServices;
+using System.Threading.Tasks;
 
 namespace BusinessLogic.Modules.EventParticipantModule.Services
 {
-    public class EventService
+    public class EventParticipantService : IEventParticipantService
     {
-        private readonly IEventRepository repository;
-        private readonly IMapper mapper;
+        private readonly IEventParticipantRepository repository;
 
-        public EventService(IEventRepository repository, IMapper mapper)
+        public EventParticipantService(IEventParticipantRepository repository)
         {
             this.repository = repository;
-            this.mapper = mapper;
+        }
+
+        public async Task<int?> GetExistingParticipantId(IEventParticipant eventParticipant)
+        {
+            return await repository.GetIdByAsync(
+                x => x.LastName.ToLower() == eventParticipant.LastName.ToLower().Trim()
+                && x.FirstName.ToLower() == eventParticipant.FirstName.ToLower().Trim()
+                && x.Email.ToLower() == eventParticipant.Email.ToLower().Trim());
         }
     }
 }

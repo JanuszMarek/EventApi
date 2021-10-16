@@ -5,11 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Modules\EventModule\DTOs\" />
     <Folder Include="Modules\EventParticipantModule\DTOs\" />
-    <Folder Include="Modules\EventParticipantModule\Models\" />
     <Folder Include="Modules\EventTicketModule\DTOs\" />
-    <Folder Include="Modules\EventTicketModule\Models\" />
   </ItemGroup>
 
   <ItemGroup>

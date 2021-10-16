@@ -1,4 +1,4 @@
-﻿using Entities.Interfaces;
+﻿using Entities.Interfaces.Abstract;
 
 namespace Entities.Models
 {

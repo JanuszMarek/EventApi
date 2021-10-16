@@ -1,4 +1,6 @@
 using BusinessLogic.Modules.EventModule.Services;
+using BusinessLogic.Modules.EventParticipantModule.Services;
+using BusinessLogic.Modules.EventTicketModule.Services;
 using DataLayer;
 using DataLayer.Repositories;
 using Infrastructure.Interfaces.IRepositories;
@@ -112,11 +114,14 @@ namespace EventApi
             {
                 services.AddTransient<IEventRepository, EventRepository>();
                 services.AddTransient<IEventTicketRepository, EventTicketRepository>();
+                services.AddTransient<IEventParticipantRepository, EventParticipantRepository>();
             }
 
             static void RegisterBusinessServices(IServiceCollection services)
             {
                 services.AddTransient<IEventService, EventService>();
+                services.AddTransient<IEventTicketService, EventTicketService>();
+                services.AddTransient<IEventParticipantService, EventParticipantService>();
             }
         }
     }

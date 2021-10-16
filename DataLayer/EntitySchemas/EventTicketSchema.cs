@@ -17,9 +17,9 @@ namespace DataLayer.EntitySchemas
                     .WithMany(x => x.EventTickets)
                     .HasForeignKey(x => x.EventParticipantId);
 
-                entity.HasQueryFilter(x => !x.IsDeleted);
+                entity.HasQueryFilter(x => !x.IsDeleted && !x.Event.IsDeleted);
 
-                entity.HasQueryFilter(x => !x.Event.IsDeleted);
+                //entity.HasQueryFilter(x => !x.Event.IsDeleted);
             });
         }
     }

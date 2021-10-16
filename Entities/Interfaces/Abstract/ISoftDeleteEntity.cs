@@ -1,4 +1,4 @@
-﻿namespace Entities.Interfaces
+﻿namespace Entities.Interfaces.Abstract
 {
     public interface ISoftDeleteEntity
     {

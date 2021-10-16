@@ -1,9 +1,10 @@
 ﻿using Entities.Interfaces;
+using Entities.Interfaces.Abstract;
 using System.Collections.Generic;
 
 namespace Entities.Models
 {
-    public partial class EventParticipant : IEntity<int>
+    public partial class EventParticipant : IEntity<int>, IEventParticipant
     {
         public int Id { get; set; }
 

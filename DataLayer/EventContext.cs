@@ -1,5 +1,5 @@
 ﻿using DataLayer.EntitySchemas;
-using Entities.Interfaces;
+using Entities.Interfaces.Abstract;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -36,10 +36,10 @@ namespace DataLayer
 
         private void OnBeforeSaveChanges()
         {
-            MarkDeletedEntitiesAsSoftDelete();
+            MarkDeletedEntitiesAsSoftDeleted();
         }
 
-        private void MarkDeletedEntitiesAsSoftDelete()
+        private void MarkDeletedEntitiesAsSoftDeleted()
         {
             var softDeletedEntries = ChangeTracker.Entries()
                 .Where(x => x.State == EntityState.Deleted && x.Entity is ISoftDeleteEntity);
