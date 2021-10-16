@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BusinessModels.Modules.EventTicketModule.Models;
 using Entities.Models;
-using System;
 
 namespace BusinessLogic.Modules.EventTicketModule.Profiles
 {

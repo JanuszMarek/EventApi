@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BusinessModels.Modules.EventParticipantModule.DTOs;
 using Entities.Models;
-using System;
 
 namespace BusinessLogic.Modules.EventParticipantModule.Profiles
 {
@@ -12,7 +11,6 @@ namespace BusinessLogic.Modules.EventParticipantModule.Profiles
             MapModelsToEntities();
             MapEntitiesToModels();
         }
-
 
         private void MapModelsToEntities()
         {

@@ -1,4 +1,6 @@
 ﻿using BusinessModels.Modules.EventTicketModule.Models;
+using Entities.Models;
+using EventApi.ActionFilters;
 using Infrastructure.Interfaces.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -8,6 +10,7 @@ namespace EventApi.Controllers
 {
     [ApiController]
     [Route("api/Event/{eventId}/[controller]")]
+    [ServiceFilter(typeof(EntityExistFilter<Event, int>))]
     public class TicketController : Controller
     {
         private readonly IEventTicketService eventTicketService;
@@ -37,11 +40,12 @@ namespace EventApi.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("{ticketId}")]
+        [HttpDelete("{eventTicketId}")]
+        [ServiceFilter(typeof(EntityExistFilter<EventTicket, long>))]
         [SwaggerOperation(nameof(ReturnTicketAsync))]
-        public async Task<IActionResult> ReturnTicketAsync([FromRoute] int ticketId)
+        public async Task<IActionResult> ReturnTicketAsync([FromRoute] int eventTicketId)
         {
-            await eventTicketService.ReturnTicketAsync(ticketId);
+            await eventTicketService.ReturnTicketAsync(eventTicketId);
 
             return Ok();
         }

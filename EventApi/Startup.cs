@@ -3,7 +3,11 @@ using BusinessLogic.Modules.EventParticipantModule.Services;
 using BusinessLogic.Modules.EventTicketModule.Services;
 using DataLayer;
 using DataLayer.Repositories;
+using DataLayer.Repositories.Abstract;
+using Entities.Models;
+using EventApi.ActionFilters;
 using Infrastructure.Interfaces.IRepositories;
+using Infrastructure.Interfaces.IRepositories.Abstract;
 using Infrastructure.Interfaces.IServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -109,11 +113,15 @@ namespace EventApi
         {
             RegisterRepositories(services);
             RegisterBusinessServices(services);
+            RegisterFilters(services);
 
             static void RegisterRepositories(IServiceCollection services)
             {
+                
                 services.AddTransient<IEventRepository, EventRepository>();
+                services.AddTransient<IBaseRepository<Event, int>, EventRepository>();
                 services.AddTransient<IEventTicketRepository, EventTicketRepository>();
+                services.AddTransient<IBaseRepository<EventTicket, long>, EventTicketRepository>();
                 services.AddTransient<IEventParticipantRepository, EventParticipantRepository>();
             }
 
@@ -122,6 +130,12 @@ namespace EventApi
                 services.AddTransient<IEventService, EventService>();
                 services.AddTransient<IEventTicketService, EventTicketService>();
                 services.AddTransient<IEventParticipantService, EventParticipantService>();
+            }
+
+            static void RegisterFilters(IServiceCollection services)
+            {
+                services.AddTransient<EntityExistFilter<Event, int>>();
+                services.AddTransient<EntityExistFilter<EventTicket, long>>();
             }
         }
     }

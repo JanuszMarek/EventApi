@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace DataLayer.Repositories
 {
     public class EventParticipantRepository : 
-        BaseRepository<EventParticipant, int>, 
+        BaseRepository<EventParticipant, int>,
         IEventParticipantRepository
     {
         public EventParticipantRepository(EventContext context, IMapper mapper) : base(context, mapper)

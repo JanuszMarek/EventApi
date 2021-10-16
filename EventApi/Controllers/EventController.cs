@@ -1,4 +1,6 @@
 ﻿using BusinessModels.Modules.EventModule.Models;
+using Entities.Models;
+using EventApi.ActionFilters;
 using Infrastructure.Interfaces.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -27,6 +29,7 @@ namespace EventApi.Controllers
         }
 
         [HttpGet("{eventId}")]
+        [ServiceFilter(typeof(EntityExistFilter<Event, int>))]
         [SwaggerOperation(nameof(GetDetailsAsync))]
         public async Task<IActionResult> GetDetailsAsync([FromRoute] int eventId)
         {
@@ -45,6 +48,7 @@ namespace EventApi.Controllers
         }
 
         [HttpPut("{eventId}")]
+        [ServiceFilter(typeof(EntityExistFilter<Event, int>))]
         [SwaggerOperation(nameof(EditAsync))]
         public async Task<IActionResult> EditAsync([FromRoute] int eventId, [FromBody] EventEditModel editModel)
         {
@@ -54,6 +58,7 @@ namespace EventApi.Controllers
         }
 
         [HttpDelete("{eventId}")]
+        [ServiceFilter(typeof(EntityExistFilter<Event, int>))]
         [SwaggerOperation(nameof(DeleteAsync))]
         public async Task<IActionResult> DeleteAsync([FromRoute] int eventId)
         {

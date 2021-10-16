@@ -14,6 +14,7 @@ namespace Infrastructure.Interfaces.IRepositories.Abstract
         Task AddRangeAsync(IEnumerable<TEntity> entities);
         void Delete(TEntity entity);
         void DeleteRange(IEnumerable<TEntity> entities);
+        Task<bool> ExistAsync(TKey id);
         Task<TEntity> FindAsync(TKey id);
         Task<TEntity> GetAsync(TKey id);
         Task<TEntity> GetAsync(TKey id, IEnumerable<string> includes);

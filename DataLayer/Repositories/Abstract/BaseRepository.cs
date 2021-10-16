@@ -51,6 +51,11 @@ namespace DataLayer.Repositories.Abstract
             dbSet.RemoveRange(entities);
         }
 
+        public async Task<bool> ExistAsync(TKey id)
+        {
+            return await GetWhereIncludeQuery(ByIdExpression(id), null).AnyAsync();
+        }
+
         public async Task<TEntity> FindAsync(TKey id)
         {
             return await dbSet

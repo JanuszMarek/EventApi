@@ -18,8 +18,6 @@ namespace DataLayer.EntitySchemas
                     .HasForeignKey(x => x.EventParticipantId);
 
                 entity.HasQueryFilter(x => !x.IsDeleted && !x.Event.IsDeleted);
-
-                //entity.HasQueryFilter(x => !x.Event.IsDeleted);
             });
         }
     }
