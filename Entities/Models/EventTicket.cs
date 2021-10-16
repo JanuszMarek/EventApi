@@ -1,8 +1,9 @@
 ﻿using Entities.Interfaces.Abstract;
+using System;
 
 namespace Entities.Models
 {
-    public partial class EventTicket : IEntity<long>, ISoftDeleteEntity
+    public class EventTicket : IEntity<long>, ISoftDeleteEntity
     {
         public long Id { get; set; }
 
@@ -14,5 +15,19 @@ namespace Entities.Models
 
         public EventParticipant EventParticipant { get; set; }
         public bool IsDeleted { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is EventTicket ticket &&
+                   Id == ticket.Id &&
+                   EventId == ticket.EventId &&
+                   EventParticipantId == ticket.EventParticipantId &&
+                   IsDeleted == ticket.IsDeleted;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, EventId, EventParticipantId, IsDeleted);
+        }
     }
 }

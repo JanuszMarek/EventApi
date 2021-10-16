@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessModels.Modules.EventParticipantModule.DTOs;
+using BusinessModels.Modules.EventParticipantModule.Models;
 using Entities.Models;
 
 namespace BusinessLogic.Modules.EventParticipantModule.Profiles

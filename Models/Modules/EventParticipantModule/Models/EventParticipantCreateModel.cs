@@ -2,7 +2,7 @@
 using Entities.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
-namespace BusinessModels.Modules.EventParticipantModule.DTOs
+namespace BusinessModels.Modules.EventParticipantModule.Models
 {
     public class EventParticipantCreateModel : IEventParticipant
     {
