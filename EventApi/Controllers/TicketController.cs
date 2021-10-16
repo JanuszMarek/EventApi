@@ -1,6 +1,7 @@
 ﻿using BusinessModels.Modules.EventTicketModule.Models;
 using Entities.Models;
 using EventApi.ActionFilters;
+using EventApi.Constants;
 using Infrastructure.Interfaces.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -37,7 +38,7 @@ namespace EventApi.Controllers
         {
             var result = await eventTicketService.BuyTicketAsync(eventId, eventTicketCreateModel);
 
-            return Ok(result);
+            return Ok(result ? ResponseMessages.TICKET_BUY_SUCCESS : ResponseMessages.TICKET_BUY_FAILURE);
         }
 
         [HttpDelete("{eventTicketId}")]

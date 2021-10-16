@@ -1,4 +1,5 @@
 ﻿using Entities.Interfaces.Abstract;
+using EventApi.Constants;
 using Infrastructure.Extensions;
 using Infrastructure.Interfaces.IRepositories.Abstract;
 using Microsoft.AspNetCore.Mvc;
@@ -26,30 +27,27 @@ namespace EventApi.ActionFilters
             TKey id;
             var entityName = typeof(TEntity).Name;
             var idName = entityName.LowercaseFirst() + "Id";
-            //var repository = (IBaseRepository<TEntity, TKey>)context.HttpContext.RequestServices.GetService(typeof(IBaseRepository<TEntity, TKey>));
 
             if (context.RouteData.Values.Keys.Contains(idName))
             {
                 var converted = TypeDescriptor.GetConverter(typeof(TKey)).ConvertFromString(context.RouteData.Values[idName].ToString());
                 if (converted == null)
                 {
-                    string msg = "Wrong Id format";
-                    context.Result = new BadRequestObjectResult(msg);
+                    context.Result = new BadRequestObjectResult(ResponseMessages.ID_WRONG_FORMAT);
                     return;
                 }
                 id = (TKey)converted;
             }
             else
             {
-                string msg = "Id could not be found in parameters";
-                context.Result = new BadRequestObjectResult(msg);
+                context.Result = new BadRequestObjectResult(ResponseMessages.ID_NOT_FOUND);
                 return;
             }
 
             var enityExists = await repository.ExistAsync(id);
             if (!enityExists)
             {
-                string msg = $"Data with id {id} does not exist or is deleted.";
+                string msg = string.Format(ResponseMessages.DATA_NOT_EXIST, entityName, id);
                 context.Result = new NotFoundObjectResult(msg);
                 return;
             }
